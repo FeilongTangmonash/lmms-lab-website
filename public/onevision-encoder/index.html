@@ -372,8 +372,10 @@
             }
 
             /* Pipeline labels - Make responsive */
-            .pipeline-labels > div {
-                font-size: 0.65rem;
+            @media (max-width: 768px) {
+                .pipeline-label {
+                    font-size: 0.65rem;
+                }
             }
             
             /* Pipeline label item styling */
