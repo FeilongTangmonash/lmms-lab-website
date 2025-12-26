@@ -373,7 +373,16 @@
 
             /* Pipeline labels - Make responsive */
             .pipeline-labels > div {
-                font-size: 0.65rem !important;
+                font-size: 0.65rem;
+            }
+            
+            /* Pipeline label item styling */
+            .pipeline-label {
+                flex: 1;
+                text-align: center;
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: #1f2937;
             }
 
             /* Padding adjustments */
@@ -564,18 +573,10 @@
                 <div style="max-width: 1100px; margin: 0 auto;">
                     <!-- Labels Row -->
                     <div class="pipeline-labels" style="display: flex; justify-content: space-around; margin-bottom: 0.75rem; padding: 0 1rem;">
-                        <div style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937;">
-                            Original Video
-                        </div>
-                        <div style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937;">
-                            Uniform Frame Sampling
-                        </div>
-                        <div style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937;">
-                            Temporal Saliency Detection
-                        </div>
-                        <div style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937;">
-                            Codec-Style Patch Extraction
-                        </div>
+                        <div class="pipeline-label">Original Video</div>
+                        <div class="pipeline-label">Uniform Frame Sampling</div>
+                        <div class="pipeline-label">Temporal Saliency Detection</div>
+                        <div class="pipeline-label">Codec-Style Patch Extraction</div>
                     </div>
                     <div id="pipelineGifContainer" style="position: relative; border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
                         <video id="pipelineGifImage" src="images/case1.webm" autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 0.75rem; display: block; transition: opacity 0.3s ease;"></video>
