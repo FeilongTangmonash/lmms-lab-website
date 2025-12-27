@@ -375,7 +375,7 @@
             /* Pipeline label container styling - positioned inside video */
             .pipeline-labels {
                 position: absolute !important;
-                top: 0.5rem !important;
+                top: 1.5rem !important;
                 left: 0 !important;
                 right: 0 !important;
                 display: flex !important;
@@ -393,8 +393,8 @@
                 text-align: center;
                 font-size: 0.875rem;
                 font-weight: 600;
-                color: #ffffff;
-                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+                color: #1f2937;
+                text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
                 white-space: nowrap;
                 padding: 0 0.25rem;
             }
@@ -595,11 +595,11 @@
                 <div style="max-width: 1100px; margin: 0 auto;">
                     <div id="pipelineGifContainer" style="position: relative; border-radius: 0.75rem; overflow: visible; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
                         <!-- Labels Row - positioned inside video container -->
-                        <div class="pipeline-labels" style="position: absolute; top: 0.5rem; left: 0; right: 0; display: flex; flex-direction: row; justify-content: space-around; align-items: center; padding: 0 1rem; flex-wrap: nowrap; z-index: 10;">
-                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); white-space: nowrap; padding: 0 0.25rem;">Original Video</div>
-                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); white-space: nowrap; padding: 0 0.25rem;">Uniform Frame Sampling</div>
-                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); white-space: nowrap; padding: 0 0.25rem;">Temporal Saliency Detection</div>
-                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); white-space: nowrap; padding: 0 0.25rem;">Codec-Style Patch Extraction</div>
+                        <div class="pipeline-labels" style="position: absolute; top: 1.5rem; left: 0; right: 0; display: flex; flex-direction: row; justify-content: space-around; align-items: center; padding: 0 1rem; flex-wrap: nowrap; z-index: 10;">
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); white-space: nowrap; padding: 0 0.25rem;">Original Video</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); white-space: nowrap; padding: 0 0.25rem;">Uniform Frame Sampling</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); white-space: nowrap; padding: 0 0.25rem;">Temporal Saliency Detection</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); white-space: nowrap; padding: 0 0.25rem;">Codec-Style Patch Extraction</div>
                         </div>
                         <video id="pipelineGifImage" src="images/case1.webm" autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 0.75rem; display: block; transition: opacity 0.3s ease;"></video>
                     </div>
