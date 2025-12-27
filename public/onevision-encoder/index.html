@@ -374,9 +374,12 @@
             /* Pipeline label item styling */
             .pipeline-labels {
                 display: flex;
+                flex-direction: row;
                 justify-content: space-around;
+                align-items: center;
                 margin-bottom: 0.75rem;
                 padding: 0 1rem;
+                flex-wrap: nowrap;
             }
             
             .pipeline-label {
@@ -385,12 +388,15 @@
                 font-size: 0.875rem;
                 font-weight: 600;
                 color: #1f2937;
+                white-space: nowrap;
+                padding: 0 0.25rem;
             }
             
             /* Pipeline labels - Make responsive */
             @media (max-width: 768px) {
                 .pipeline-label {
                     font-size: 0.65rem;
+                    white-space: normal;
                 }
             }
 
