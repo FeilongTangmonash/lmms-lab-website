@@ -588,15 +588,18 @@
 
                 <!-- Interactive GIF Display with Case Switching -->
                 <div style="max-width: 1100px; margin: 0 auto;">
-                    <!-- Labels Row - positioned above video container -->
-                    <div class="pipeline-labels" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; margin-bottom: 0.75rem; padding: 0 1rem; flex-wrap: nowrap;">
-                        <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Original Video</div>
-                        <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Uniform Frame Sampling</div>
-                        <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Temporal Saliency Detection</div>
-                        <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Codec-Style Patch Extraction</div>
-                    </div>
-                    <div id="pipelineGifContainer" style="position: relative; border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
-                        <video id="pipelineGifImage" src="images/case1.webm" autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 0.75rem; display: block; transition: opacity 0.3s ease;"></video>
+                    <!-- Outer frame containing both labels and video -->
+                    <div style="border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); background: #ffffff;">
+                        <!-- Labels Row - positioned above video container -->
+                        <div class="pipeline-labels" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; margin-bottom: 1rem; padding: 0 1rem; flex-wrap: nowrap;">
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Original Video</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Uniform Frame Sampling</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Temporal Saliency Detection</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Codec-Style Patch Extraction</div>
+                        </div>
+                        <div id="pipelineGifContainer" style="position: relative; border-radius: 0.5rem; overflow: hidden;">
+                            <video id="pipelineGifImage" src="images/case1.webm" autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 0.5rem; display: block; transition: opacity 0.3s ease;"></video>
+                        </div>
                     </div>
 
                     <p id="pipelineDescription" class="text-center text-gray-500 text-xs mt-4 italic max-w-3xl mx-auto">
