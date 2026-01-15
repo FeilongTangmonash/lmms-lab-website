@@ -635,16 +635,26 @@
                 transform-origin: top center !important;
             }
             
-            /* Traditional Sampling: center and allow natural sizing */
+            /* Traditional Sampling: 2x2 responsive grid layout on mobile */
             #image-grid-sampling {
-                transform-origin: top center !important;
-                transform: none !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem !important;
                 width: 100% !important;
+                height: auto !important;
+                max-width: 100% !important;
+                padding: 0 !important;
                 margin: 0 auto !important;
-                display: flex !important;
-                justify-content: center !important;
-                flex-direction: column !important;
-                align-items: center !important;
+            }
+            
+            #image-grid-sampling .sampling-frame-wrapper {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                transform: none !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             /* Improve table mobile experience - override ::after with ::before */
@@ -1697,24 +1707,64 @@
                 setInterval(animateFrame, ANIMATION_DELAY);
             }
 
-            // Standard grid for sampling
+            // Standard grid for sampling - supports responsive layout
             function createImageGrid(gridContainer, fileMap, imageBasePath) {
-                for (let row = 0; row < GRID_SIZE; row++) {
-                    const rowDiv = document.createElement('div');
-                    rowDiv.style.display = 'flex';
-                    rowDiv.style.flexDirection = 'row';
-                    rowDiv.style.gap = GAP + 'px';
-                    rowDiv.style.alignItems = 'center';
-
-                    for (let imgIdx = 0; imgIdx < NUM_IMAGES_SAMPLING; imgIdx++) {
-                        if (imgIdx > 0) {
-                            const spacer = document.createElement('div');
-                            spacer.style.width = IMAGE_GAP + 'px';
-                            rowDiv.appendChild(spacer);
-                        }
+                // Detect layout mode
+                const containerWidth = gridContainer.offsetWidth || window.innerWidth;
+                const isMobileLayout = containerWidth <= 768;
+                
+                // Calculate appropriate grid dimensions
+                const cellSize = IMAGE_SIZE + GAP;
+                const frameWidth = GRID_SIZE * cellSize - GAP;
+                const frameGap = 20;
+                
+                if (isMobileLayout) {
+                    // Mobile: 2x2 grid, auto dimensions
+                    gridContainer.style.width = 'auto';
+                    gridContainer.style.height = 'auto';
+                } else {
+                    // Desktop: 2x2 grid with fixed dimensions
+                    const totalWidth = 2 * frameWidth + frameGap;
+                    const totalHeight = 2 * (frameWidth + 40) + frameGap;
+                    gridContainer.style.width = totalWidth + 'px';
+                    gridContainer.style.height = totalHeight + 'px';
+                }
+                
+                gridContainer.style.position = 'relative';
+                gridContainer.style.overflow = 'visible';
+                
+                // Create 4 frame wrappers (0, 1, 2, 3 for 4 sampled frames)
+                for (let frameIdx = 0; frameIdx < NUM_IMAGES_SAMPLING; frameIdx++) {
+                    const frameWrapper = document.createElement('div');
+                    frameWrapper.className = 'sampling-frame-wrapper';
+                    
+                    if (!isMobileLayout) {
+                        // Desktop: use absolute positioning for 2x2 grid
+                        frameWrapper.style.position = 'absolute';
+                        const row = Math.floor(frameIdx / 2);
+                        const col = frameIdx % 2;
+                        frameWrapper.style.left = (col * (frameWidth + frameGap)) + 'px';
+                        frameWrapper.style.top = (row * (frameWidth + 40 + frameGap)) + 'px';
+                    }
+                    
+                    frameWrapper.style.width = frameWidth + 'px';
+                    frameWrapper.style.height = (frameWidth + 40) + 'px';
+                    
+                    // Create grid container for this frame
+                    const gridDiv = document.createElement('div');
+                    gridDiv.style.display = 'flex';
+                    gridDiv.style.flexDirection = 'column';
+                    gridDiv.style.gap = GAP + 'px';
+                    
+                    for (let row = 0; row < GRID_SIZE; row++) {
+                        const rowDiv = document.createElement('div');
+                        rowDiv.style.display = 'flex';
+                        rowDiv.style.flexDirection = 'row';
+                        rowDiv.style.gap = GAP + 'px';
+                        rowDiv.style.alignItems = 'center';
 
                         for (let col = 0; col < GRID_SIZE; col++) {
-                            const key = `${imgIdx}_${row}_${col}`;
+                            const key = `${frameIdx}_${row}_${col}`;
                             const fileInfo = fileMap[key];
 
                             const imgContainer = document.createElement('div');
@@ -1777,9 +1827,24 @@
 
                             rowDiv.appendChild(imgContainer);
                         }
+                        
+                        gridDiv.appendChild(rowDiv);
                     }
-
-                    gridContainer.appendChild(rowDiv);
+                    
+                    frameWrapper.appendChild(gridDiv);
+                    
+                    // Add frame label
+                    const frameLabel = document.createElement('div');
+                    frameLabel.style.position = 'absolute';
+                    frameLabel.style.left = (frameWidth / 2 - 30) + 'px';
+                    frameLabel.style.bottom = '10px';
+                    frameLabel.style.fontSize = '14px';
+                    frameLabel.style.fontWeight = '600';
+                    frameLabel.style.color = '#1f2937';
+                    frameLabel.textContent = `Frame ${frameIdx + 1}`;
+                    frameWrapper.appendChild(frameLabel);
+                    
+                    gridContainer.appendChild(frameWrapper);
                 }
             }
 
