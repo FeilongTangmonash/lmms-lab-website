@@ -635,16 +635,28 @@
                 transform-origin: top center !important;
             }
             
-            /* Traditional Sampling: center and allow natural sizing */
+            /* Traditional Sampling: 2x2 responsive grid on mobile */
             #image-grid-sampling {
                 transform-origin: top center !important;
                 transform: none !important;
                 width: 100% !important;
                 margin: 0 auto !important;
-                display: flex !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem !important;
                 justify-content: center !important;
-                flex-direction: column !important;
-                align-items: center !important;
+                align-items: start !important;
+            }
+            
+            #image-grid-sampling .sampling-frame-wrapper {
+                position: relative !important;
+                left: auto !important;
+                top: auto !important;
+                width: 100% !important;
+                height: auto !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             /* Improve table mobile experience - override ::after with ::before */
@@ -1699,27 +1711,55 @@
 
             // Standard grid for sampling
             function createImageGrid(gridContainer, fileMap, imageBasePath) {
-                for (let row = 0; row < GRID_SIZE; row++) {
-                    const rowDiv = document.createElement('div');
-                    rowDiv.style.display = 'flex';
-                    rowDiv.style.flexDirection = 'row';
-                    rowDiv.style.gap = GAP + 'px';
-                    rowDiv.style.alignItems = 'center';
+                const cellSize = IMAGE_SIZE + GAP;
+                const blockWidth = GRID_SIZE * cellSize - GAP;
+                const blockHeight = GRID_SIZE * cellSize - GAP;
+                
+                // Detect layout mode based on container width
+                const containerWidth = gridContainer.offsetWidth || window.innerWidth;
+                const isMobileLayout = containerWidth <= 768;
+                
+                gridContainer.style.position = 'relative';
+                gridContainer.style.width = isMobileLayout ? 'auto' : 'fit-content';
+                gridContainer.style.height = isMobileLayout ? 'auto' : 'fit-content';
+                gridContainer.style.overflow = 'visible';
 
-                    for (let imgIdx = 0; imgIdx < NUM_IMAGES_SAMPLING; imgIdx++) {
-                        if (imgIdx > 0) {
-                            const spacer = document.createElement('div');
-                            spacer.style.width = IMAGE_GAP + 'px';
-                            rowDiv.appendChild(spacer);
-                        }
-
+                // Create 4 frames (imgIdx 0-3) in 2x2 grid
+                for (let imgIdx = 0; imgIdx < NUM_IMAGES_SAMPLING; imgIdx++) {
+                    // Create wrapper for this frame
+                    const frameWrapper = document.createElement('div');
+                    frameWrapper.className = 'sampling-frame-wrapper';
+                    
+                    if (!isMobileLayout) {
+                        // Desktop: use absolute positioning for 2x2 grid
+                        frameWrapper.style.position = 'absolute';
+                        const row = Math.floor(imgIdx / 2);
+                        const col = imgIdx % 2;
+                        const gap = 20;
+                        frameWrapper.style.left = col * (blockWidth + gap) + 'px';
+                        frameWrapper.style.top = row * (blockHeight + 50) + 'px';
+                    }
+                    
+                    frameWrapper.style.width = blockWidth + 'px';
+                    frameWrapper.style.height = (blockHeight + 30) + 'px';
+                    
+                    // Create 8x8 grid for this frame
+                    const gridDiv = document.createElement('div');
+                    gridDiv.style.position = 'relative';
+                    gridDiv.style.width = blockWidth + 'px';
+                    gridDiv.style.height = blockHeight + 'px';
+                    
+                    for (let row = 0; row < GRID_SIZE; row++) {
                         for (let col = 0; col < GRID_SIZE; col++) {
                             const key = `${imgIdx}_${row}_${col}`;
                             const fileInfo = fileMap[key];
 
                             const imgContainer = document.createElement('div');
+                            imgContainer.style.position = 'absolute';
                             imgContainer.style.width = IMAGE_SIZE + 'px';
                             imgContainer.style.height = IMAGE_SIZE + 'px';
+                            imgContainer.style.left = (col * cellSize) + 'px';
+                            imgContainer.style.top = (row * cellSize) + 'px';
                             imgContainer.style.cursor = 'pointer';
                             imgContainer.style.transition = 'all 0.15s';
                             imgContainer.style.overflow = 'hidden';
@@ -1752,11 +1792,10 @@
                                 this.style.transform = 'scale(1.5)';
                                 this.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.3)';
                                 this.style.zIndex = '100';
-                                this.style.position = 'relative';
                                 const t = this.dataset.t || '?';
                                 const h = this.dataset.h || '?';
                                 const w = this.dataset.w || '?';
-                                tooltipText.textContent = `t=${t}, h=${h}, w=${w}`;
+                                tooltipText.textContent = `Frame ${parseInt(t) + 1}, h=${h}, w=${w}`;
                                 tooltip.style.left = (e.clientX + 15) + 'px';
                                 tooltip.style.top = (e.clientY + 15) + 'px';
                                 tooltip.style.opacity = '1';
@@ -1771,15 +1810,27 @@
                                 this.style.transform = 'scale(1)';
                                 this.style.boxShadow = 'none';
                                 this.style.zIndex = '';
-                                this.style.position = '';
                                 tooltip.style.opacity = '0';
                             });
 
-                            rowDiv.appendChild(imgContainer);
+                            gridDiv.appendChild(imgContainer);
                         }
                     }
-
-                    gridContainer.appendChild(rowDiv);
+                    
+                    frameWrapper.appendChild(gridDiv);
+                    
+                    // Add frame label
+                    const frameLabel = document.createElement('div');
+                    frameLabel.style.textAlign = 'center';
+                    frameLabel.style.fontSize = '14px';
+                    frameLabel.style.fontWeight = '600';
+                    frameLabel.style.color = '#1f2937';
+                    frameLabel.style.marginTop = '8px';
+                    const frameMapping = {0: 8, 1: 16, 2: 32, 3: 64};
+                    frameLabel.textContent = `Frame ${imgIdx + 1} (${frameMapping[imgIdx]} frames sampled)`;
+                    frameWrapper.appendChild(frameLabel);
+                    
+                    gridContainer.appendChild(frameWrapper);
                 }
             }
 
