@@ -1510,6 +1510,16 @@
                 
                 refBlockWrapper.style.width = blockWidth + 'px';
                 refBlockWrapper.style.height = (totalHeight + 40) + 'px';
+                refBlockWrapper.style.display = 'flex';
+                refBlockWrapper.style.flexDirection = 'column';
+                refBlockWrapper.style.alignItems = 'center';
+                refBlockWrapper.style.overflow = 'visible';
+                
+                // Create inner grid container for patches
+                const refGridDiv = document.createElement('div');
+                refGridDiv.style.position = 'relative';
+                refGridDiv.style.width = blockWidth + 'px';
+                refGridDiv.style.height = totalHeight + 'px';
 
                 // Block 0: Static reference frame (t=0, displayed as t=1)
                 const refPatches = patchesByT[0] || [];
@@ -1561,15 +1571,15 @@
                             imgContainer.style.backgroundColor = '#1a1a1a';
                         }
 
-                        refBlockWrapper.appendChild(imgContainer);
+                        refGridDiv.appendChild(imgContainer);
                     }
                 }
+                
+                refBlockWrapper.appendChild(refGridDiv);
 
                 // Label for reference block
                 const refLabel = document.createElement('div');
-                refLabel.style.position = 'absolute';
-                refLabel.style.left = (blockWidth / 2 - 20) + 'px';
-                refLabel.style.top = (totalHeight + 10) + 'px';
+                refLabel.style.marginTop = '10px';
                 refLabel.style.fontSize = '14px';
                 refLabel.style.fontWeight = '600';
                 refLabel.style.color = '#1f2937';
@@ -1596,6 +1606,16 @@
                     
                     blockWrapper.style.width = blockWidth + 'px';
                     blockWrapper.style.height = (totalHeight + 40) + 'px';
+                    blockWrapper.style.display = 'flex';
+                    blockWrapper.style.flexDirection = 'column';
+                    blockWrapper.style.alignItems = 'center';
+                    blockWrapper.style.overflow = 'visible';
+                    
+                    // Create inner grid container for patches
+                    const animGridDiv = document.createElement('div');
+                    animGridDiv.style.position = 'relative';
+                    animGridDiv.style.width = blockWidth + 'px';
+                    animGridDiv.style.height = totalHeight + 'px';
                     
                     const gridCells = {};
 
@@ -1620,7 +1640,7 @@
                             img.style.objectFit = 'cover';
 
                             imgContainer.appendChild(img);
-                            blockWrapper.appendChild(imgContainer);
+                            animGridDiv.appendChild(imgContainer);
                             gridCells[`${h}_${w}`] = { container: imgContainer, img: img };
 
                             imgContainer.addEventListener('mouseenter', function(e) {
@@ -1646,7 +1666,19 @@
                             });
                         }
                     }
+                    
+                    blockWrapper.appendChild(animGridDiv);
 
+                    // Label for this block
+                    const blockLabel = document.createElement('div');
+                    blockLabel.style.marginTop = '10px';
+                    blockLabel.style.fontSize = '14px';
+                    blockLabel.style.fontWeight = '600';
+                    blockLabel.style.color = '#1f2937';
+                    blockLabel.textContent = `t = ...`;
+                    blockWrapper.appendChild(blockLabel);
+                    animLabels.push(blockLabel);
+                    gridContainer.appendChild(blockWrapper);
                     animBlocks.push(gridCells);
 
                     const label = document.createElement('div');
