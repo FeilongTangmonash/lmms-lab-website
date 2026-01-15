@@ -635,28 +635,30 @@
                 transform-origin: top center !important;
             }
             
-            /* Traditional Sampling: 2x2 responsive grid on mobile */
-            #image-grid-sampling {
-                transform-origin: top center !important;
-                transform: none !important;
-                width: 100% !important;
-                margin: 0 auto !important;
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1rem !important;
-                justify-content: center !important;
-                align-items: start !important;
-            }
-            
-            #image-grid-sampling .sampling-frame-wrapper {
-                position: relative !important;
-                left: auto !important;
-                top: auto !important;
-                width: 100% !important;
-                height: auto !important;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+            /* Traditional Sampling: 2x2 responsive grid ONLY on mobile */
+            @media (max-width: 768px) {
+                #image-grid-sampling {
+                    transform-origin: top center !important;
+                    transform: none !important;
+                    width: 100% !important;
+                    margin: 0 auto !important;
+                    display: grid !important;
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 1rem !important;
+                    justify-content: center !important;
+                    align-items: start !important;
+                }
+                
+                #image-grid-sampling .sampling-frame-wrapper {
+                    position: relative !important;
+                    left: auto !important;
+                    top: auto !important;
+                    width: 100% !important;
+                    height: auto !important;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
             }
 
             /* Improve table mobile experience - override ::after with ::before */
@@ -1724,20 +1726,18 @@
                 gridContainer.style.height = isMobileLayout ? 'auto' : 'fit-content';
                 gridContainer.style.overflow = 'visible';
 
-                // Create 4 frames (imgIdx 0-3) in 2x2 grid
+                // Create 4 frames - mobile: 2x2 grid, desktop: horizontal 4-frame layout
                 for (let imgIdx = 0; imgIdx < NUM_IMAGES_SAMPLING; imgIdx++) {
                     // Create wrapper for this frame
                     const frameWrapper = document.createElement('div');
                     frameWrapper.className = 'sampling-frame-wrapper';
                     
                     if (!isMobileLayout) {
-                        // Desktop: use absolute positioning for 2x2 grid
+                        // Desktop: use absolute positioning for horizontal 4-frame layout
                         frameWrapper.style.position = 'absolute';
-                        const row = Math.floor(imgIdx / 2);
-                        const col = imgIdx % 2;
                         const gap = 20;
-                        frameWrapper.style.left = col * (blockWidth + gap) + 'px';
-                        frameWrapper.style.top = row * (blockHeight + 50) + 'px';
+                        frameWrapper.style.left = imgIdx * (blockWidth + gap) + 'px';
+                        frameWrapper.style.top = '0px';
                     }
                     
                     frameWrapper.style.width = blockWidth + 'px';
