@@ -1722,9 +1722,13 @@
                 const containerWidth = gridContainer.offsetWidth || window.innerWidth;
                 const isMobileLayout = containerWidth <= 768;
                 
+                const gap = 20;
+                const totalWidth = NUM_IMAGES_SAMPLING * blockWidth + (NUM_IMAGES_SAMPLING - 1) * gap;
+                const totalHeight = blockHeight + 30; // blockHeight + label space
+                
                 gridContainer.style.position = 'relative';
-                gridContainer.style.width = isMobileLayout ? 'auto' : 'fit-content';
-                gridContainer.style.height = isMobileLayout ? 'auto' : 'fit-content';
+                gridContainer.style.width = isMobileLayout ? 'auto' : (totalWidth + 'px');
+                gridContainer.style.height = isMobileLayout ? 'auto' : (totalHeight + 'px');
                 gridContainer.style.overflow = 'hidden';
                 gridContainer.style.marginBottom = '2rem';
 
@@ -1737,7 +1741,6 @@
                     if (!isMobileLayout) {
                         // Desktop: use absolute positioning for horizontal 4-frame layout
                         frameWrapper.style.position = 'absolute';
-                        const gap = 20;
                         frameWrapper.style.left = imgIdx * (blockWidth + gap) + 'px';
                         frameWrapper.style.top = '0px';
                     }
