@@ -1312,20 +1312,27 @@
             const IMAGE_GAP_RATIO = 0.267;  // Image gap is ~26.7% of base size (8px for 30px)
             
             // Use responsive sizing based on container width
+            // Patches now scale fluidly with container size instead of fixed breakpoints
             function getResponsiveSizes() {
                 const container = document.getElementById('image-grid-codec');
                 const containerWidth = container ? container.offsetWidth : window.innerWidth;
                 
-                // Calculate base size based on screen width
+                // Calculate base size proportionally to container width
+                // For mobile (2x2 grid): each block should fit within half the container
+                // For desktop (4x1 grid): each block should fit within a quarter of the container
+                // Target: 8x8 grid of patches + gaps should fit comfortably in available space
+                
                 let baseSize;
-                if (containerWidth <= 480) {
-                    baseSize = 20; // Very small screens
-                } else if (containerWidth <= 768) {
-                    baseSize = 25; // Mobile
-                } else if (containerWidth <= 1024) {
-                    baseSize = 28; // Tablet
+                if (containerWidth <= 768) {
+                    // Mobile/tablet: 2x2 grid layout
+                    // Each block gets roughly half the container width
+                    // 8 patches + 7 gaps per block, so: (containerWidth / 2 - padding) / 8.5
+                    baseSize = Math.max(15, Math.min(35, Math.floor((containerWidth / 2 - 40) / 8.5)));
                 } else {
-                    baseSize = 30; // Desktop
+                    // Desktop: 4x1 horizontal layout
+                    // Each block gets roughly a quarter of the container width
+                    // 8 patches + 7 gaps per block, so: (containerWidth / 4 - padding) / 8.5
+                    baseSize = Math.max(20, Math.min(40, Math.floor((containerWidth / 4 - 30) / 8.5)));
                 }
                 
                 return {
@@ -1353,7 +1360,7 @@
                 };
             }
             
-            // Update sizes on window resize with debouncing (300ms delay)
+            // Update sizes on window resize with debouncing (150ms delay for smoother adaptation)
             const handleResize = debounce(function() {
                 const newSizes = getResponsiveSizes();
                 // Check if any size property has changed
@@ -1379,7 +1386,7 @@
                         initializeSamplingGrid();
                     }
                 }
-            }, 300);
+            }, 150);
             
             window.addEventListener('resize', handleResize);
 
