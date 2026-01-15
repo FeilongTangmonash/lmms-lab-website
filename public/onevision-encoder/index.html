@@ -1127,7 +1127,7 @@
                 </p>
                 <p class="text-gray-600 mb-6 text-base">
                     For a fair comparison, SigLIP2 is evaluated under the same token budgets and adopts a traditional frame sampling strategy, where each group of 256 patches corresponds to a contiguous RGB frame. Under a fixed token budget, OV-Encoder-Codec redistributes patches across time while preserving their spatial positions, enabling long-range temporal coverage. As a result, it outperforms SigLIP2 on Diving48 and Perception Test while reducing patch processing by 75.0%–98.4% compared to dense processing of 16,384 patches.                </p>
-                <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 max-w-full mx-auto" style="background: white;">
+                <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 max-w-full mx-auto" style="background: white;" role="region" aria-label="Scrollable comparison table">
                     <table class="min-w-full divide-y divide-gray-200 data-table">
                         <colgroup>
                             <col style="width:22%">
@@ -1335,8 +1335,21 @@
             let GAP = sizes.GAP;
             let IMAGE_GAP = sizes.IMAGE_GAP;
             
-            // Update sizes on window resize
-            window.addEventListener('resize', function() {
+            // Debounce function to limit resize handler execution
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+            
+            // Update sizes on window resize with debouncing (300ms delay)
+            const handleResize = debounce(function() {
                 const newSizes = getResponsiveSizes();
                 if (newSizes.IMAGE_SIZE !== IMAGE_SIZE) {
                     IMAGE_SIZE = newSizes.IMAGE_SIZE;
@@ -1357,7 +1370,9 @@
                         initializeSamplingGrid();
                     }
                 }
-            });
+            }, 300);
+            
+            window.addEventListener('resize', handleResize);
 
             // Complete file list for Codec Style Input: filename format is imgIdx_row_col_t_h_w
             const codecFiles = [
