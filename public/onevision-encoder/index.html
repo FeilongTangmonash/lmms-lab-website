@@ -629,20 +629,22 @@
                 align-items: center;
             }
 
-            /* Scale grid cells to fit mobile width */
+            /* Remove fixed scaling - patches now auto-resize via JavaScript */
             #image-grid-codec .codec-block-wrapper > div[style*="position: absolute"] {
-                transform: scale(0.45) !important;
+                transform: none !important;
                 transform-origin: top center !important;
             }
             
-            /* Traditional Sampling: better mobile scaling */
+            /* Traditional Sampling: center and allow natural sizing */
             #image-grid-sampling {
                 transform-origin: top center !important;
-                transform: scale(0.48) !important;
+                transform: none !important;
                 width: 100% !important;
                 margin: 0 auto !important;
                 display: flex !important;
                 justify-content: center !important;
+                flex-direction: column !important;
+                align-items: center !important;
             }
 
             /* Improve table mobile experience - override ::after with ::before */
@@ -694,12 +696,13 @@
                 gap: 0.75rem !important;
             }
 
+            /* Remove fixed scaling - JavaScript handles sizing */
             #image-grid-codec .codec-block-wrapper > div[style*="position: absolute"] {
-                transform: scale(0.35) !important;
+                transform: none !important;
             }
             
             #image-grid-sampling {
-                transform: scale(0.38) !important;
+                transform: none !important;
             }
 
             /* Even smaller table text for tiny screens */
@@ -732,8 +735,9 @@
                 transform: none !important;
             }
 
+            /* Remove fixed scaling - JavaScript handles sizing */
             #image-grid-codec .codec-block-wrapper > div[style*="position: absolute"] {
-                transform: scale(0.7) !important;
+                transform: none !important;
                 transform-origin: top center !important;
             }
         }
@@ -1301,9 +1305,59 @@
 
             const NUM_IMAGES_SAMPLING = 4; // sampling: show all 4 image blocks
             const GRID_SIZE = 8;     // 8x8 grid per image
-            const IMAGE_SIZE = 30;   // Size of each patch image in pixels
-            const GAP = 2;           // Gap between images in pixels
-            const IMAGE_GAP = 8;     // Gap between different images
+            
+            // Use responsive sizing based on container width
+            function getResponsiveSizes() {
+                const container = document.getElementById('image-grid-codec');
+                const containerWidth = container ? container.offsetWidth : window.innerWidth;
+                
+                // Calculate base size based on screen width
+                let baseSize;
+                if (containerWidth <= 480) {
+                    baseSize = 20; // Very small screens
+                } else if (containerWidth <= 768) {
+                    baseSize = 25; // Mobile
+                } else if (containerWidth <= 1024) {
+                    baseSize = 28; // Tablet
+                } else {
+                    baseSize = 30; // Desktop
+                }
+                
+                return {
+                    IMAGE_SIZE: baseSize,
+                    GAP: Math.max(1, Math.floor(baseSize * 0.067)), // ~2px for 30px base
+                    IMAGE_GAP: Math.max(4, Math.floor(baseSize * 0.267)) // ~8px for 30px base
+                };
+            }
+            
+            let sizes = getResponsiveSizes();
+            let IMAGE_SIZE = sizes.IMAGE_SIZE;
+            let GAP = sizes.GAP;
+            let IMAGE_GAP = sizes.IMAGE_GAP;
+            
+            // Update sizes on window resize
+            window.addEventListener('resize', function() {
+                const newSizes = getResponsiveSizes();
+                if (newSizes.IMAGE_SIZE !== IMAGE_SIZE) {
+                    IMAGE_SIZE = newSizes.IMAGE_SIZE;
+                    GAP = newSizes.GAP;
+                    IMAGE_GAP = newSizes.IMAGE_GAP;
+                    
+                    // Reinitialize grids with new sizes
+                    const codecContainer = document.getElementById('image-grid-codec');
+                    const samplingContainer = document.getElementById('image-grid-sampling');
+                    
+                    if (codecContainer && codecContainer.children.length > 0) {
+                        codecContainer.innerHTML = '';
+                        initializeCodecGrid();
+                    }
+                    
+                    if (samplingContainer && samplingContainer.children.length > 0) {
+                        samplingContainer.innerHTML = '';
+                        initializeSamplingGrid();
+                    }
+                }
+            });
 
             // Complete file list for Codec Style Input: filename format is imgIdx_row_col_t_h_w
             const codecFiles = [
@@ -1703,12 +1757,24 @@
                 filename: f.filename
             }));
 
-            // Create grids
-            const codecGridContainer = document.getElementById('image-grid-codec');
-            createTemporalAnimationGrid(codecGridContainer, allCodecPatches, 'images/patches_codec/');
+            // Initialization functions
+            function initializeCodecGrid() {
+                const codecGridContainer = document.getElementById('image-grid-codec');
+                if (codecGridContainer) {
+                    createTemporalAnimationGrid(codecGridContainer, allCodecPatches, 'images/patches_codec/');
+                }
+            }
+            
+            function initializeSamplingGrid() {
+                const samplingGridContainer = document.getElementById('image-grid-sampling');
+                if (samplingGridContainer) {
+                    createImageGrid(samplingGridContainer, samplingFileMap, 'images/patches/');
+                }
+            }
 
-            const samplingGridContainer = document.getElementById('image-grid-sampling');
-            createImageGrid(samplingGridContainer, samplingFileMap, 'images/patches/');
+            // Create grids on initial load
+            initializeCodecGrid();
+            initializeSamplingGrid();
         });
     </script>
 
