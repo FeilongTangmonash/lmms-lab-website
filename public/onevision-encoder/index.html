@@ -670,6 +670,7 @@
             }
 
             /* Hide the bottom scroll hint on mobile (since we have top hint) */
+            /* Overrides the default ::after scroll indicator from line 405-418 */
             .overflow-x-auto::after {
                 display: none;
             }
@@ -1306,6 +1307,10 @@
             const NUM_IMAGES_SAMPLING = 4; // sampling: show all 4 image blocks
             const GRID_SIZE = 8;     // 8x8 grid per image
             
+            // Constants for responsive sizing ratios
+            const GAP_RATIO = 0.067;        // Gap is ~6.7% of base size (2px for 30px)
+            const IMAGE_GAP_RATIO = 0.267;  // Image gap is ~26.7% of base size (8px for 30px)
+            
             // Use responsive sizing based on container width
             function getResponsiveSizes() {
                 const container = document.getElementById('image-grid-codec');
@@ -1325,8 +1330,8 @@
                 
                 return {
                     IMAGE_SIZE: baseSize,
-                    GAP: Math.max(1, Math.floor(baseSize * 0.067)), // ~2px for 30px base
-                    IMAGE_GAP: Math.max(4, Math.floor(baseSize * 0.267)) // ~8px for 30px base
+                    GAP: Math.max(1, Math.floor(baseSize * GAP_RATIO)),
+                    IMAGE_GAP: Math.max(4, Math.floor(baseSize * IMAGE_GAP_RATIO))
                 };
             }
             
@@ -1351,7 +1356,11 @@
             // Update sizes on window resize with debouncing (300ms delay)
             const handleResize = debounce(function() {
                 const newSizes = getResponsiveSizes();
-                if (newSizes.IMAGE_SIZE !== IMAGE_SIZE) {
+                // Check if any size property has changed
+                if (newSizes.IMAGE_SIZE !== IMAGE_SIZE || 
+                    newSizes.GAP !== GAP || 
+                    newSizes.IMAGE_GAP !== IMAGE_GAP) {
+                    
                     IMAGE_SIZE = newSizes.IMAGE_SIZE;
                     GAP = newSizes.GAP;
                     IMAGE_GAP = newSizes.IMAGE_GAP;
