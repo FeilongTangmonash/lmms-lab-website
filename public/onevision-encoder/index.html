@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneVision Encoder: An HEVC-Style Vision Transformer</title>
+    <title>OneVision Encoder: the first HEVC style Vision Transformer with advanced multimodal capabilities</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -188,10 +188,11 @@
 
         /* Table Wrapper for MLLM Table */
         .table-wrapper {
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+        display: grid;             
+        justify-items: start;      /* 子项水平左对齐 */
+        align-items: start;        /* 子项垂直顶端对齐，可选 */
         }
+
 
         /* Centered figures and tables */
         .figure-centered {
@@ -265,8 +266,43 @@
             padding: 10px 10px;
         }
 
+        /* Mobile-specific visual enhancements */
+        @media (max-width: 768px) {
+            /* Add visual separator between sections */
+            section {
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            section:last-of-type {
+                border-bottom: none;
+            }
+
+            /* Improve table container styling */
+            .overflow-x-auto {
+                background: white;
+                border: 1px solid #e5e7eb;
+            }
+
+            /* Better video container on mobile */
+            video, img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Improve figure captions on mobile */
+            figcaption {
+                padding: 0 0.5rem;
+                font-size: 0.75rem !important;
+            }
+        }
+
         /* --- Mobile Responsive Styles --- */
         @media (max-width: 768px) {
+            /* Smooth scrolling for mobile */
+            html {
+                scroll-behavior: smooth;
+            }
+
             /* Navigation - Mobile hamburger menu */
             .mobile-menu-button {
                 display: block;
@@ -302,6 +338,7 @@
                 display: block;
                 padding: 0.75rem 0;
                 border-bottom: 1px solid #f3f4f6;
+                font-size: 1rem;
             }
 
             .mobile-nav a:last-child {
@@ -310,35 +347,74 @@
 
             /* Hero Section - Reduce text sizes */
             .hero-bg {
-                padding-top: 6rem !important;
-                padding-bottom: 3rem !important;
+                padding-top: 5rem !important;
+                padding-bottom: 2.5rem !important;
             }
 
             h1 {
-                font-size: 2.5rem !important;
-                line-height: 1.2 !important;
+                font-size: 2.25rem !important;
+                line-height: 1.15 !important;
+                margin-bottom: 1.25rem !important;
             }
 
             h1 + p {
-                font-size: 1.125rem !important;
+                font-size: 1.05rem !important;
+                line-height: 1.5 !important;
+                margin-bottom: 1rem !important;
             }
 
-            /* Buttons - Stack vertically on mobile */
+            /* Buttons - Better mobile layout */
             .btn {
-                width: 100%;
-                justify-content: center;
+                padding: 0.7rem 1.25rem;
+                font-size: 0.85rem;
+            }
+
+            /* Navigation buttons - Keep inline on desktop */
+            nav .flex.items-center.gap-2 {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            nav .btn {
+                width: auto;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
             }
 
             /* Section headings */
             h3 {
                 font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
             }
 
-            /* Tables - Enable horizontal scroll */
+            h4 {
+                font-size: 1.125rem !important;
+            }
+
+            /* Tables - Enhanced mobile experience */
             .table-wrapper,
             .overflow-x-auto {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+                position: relative;
+                border-radius: 0.5rem;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            }
+
+            /* Add scroll hint for tables */
+            .table-wrapper::after,
+            .overflow-x-auto::after {
+                content: '← Scroll →';
+                position: sticky;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(90deg, transparent 0%, rgba(248, 250, 252, 0.95) 20%);
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+                color: #64748b;
+                text-align: right;
+                pointer-events: none;
+                font-weight: 500;
             }
 
             .data-table,
@@ -346,35 +422,88 @@
                 min-width: 800px;
             }
 
+            /* Improve sticky column on mobile */
+            .data-table .sticky-col {
+                box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            }
+
             /* Feature cards - Full width on mobile */
             .feature-card {
                 padding: 1.5rem 1rem;
             }
 
-            /* Image grid - Adjust for mobile */
+            /* Image grid - Better mobile scaling */
             #image-grid-codec,
             #image-grid-sampling {
-                transform: scale(0.6);
+                transform: scale(0.55);
                 transform-origin: top left;
-                margin-bottom: -40px;
+                margin-bottom: -60px;
             }
 
-            /* Pipeline GIF controls - Adjust spacing */
+            /* Image grid containers - Better mobile display */
+            .bg-slate-50.rounded-xl {
+                padding: 1rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            /* Pipeline section - Enhanced mobile layout */
             #pipelinePrevBtn,
             #pipelineNextBtn {
-                width: 36px;
-                height: 36px;
+                width: 40px;
+                height: 40px;
             }
 
             #pipelineDots button {
-                width: 8px !important;
-                height: 8px !important;
+                width: 10px !important;
+                height: 10px !important;
+            }
+
+            /* Pipeline labels - Better responsive layout */
+            .pipeline-labels {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-around !important;
+                align-items: center !important;
+                margin-bottom: 0.75rem !important;
+                padding: 0 0.5rem !important;
+                flex-wrap: nowrap !important;
+                gap: 0.25rem !important;
+            }
+            
+            .pipeline-label {
+                flex: 1;
+                text-align: center;
+                font-size: 0.625rem;
+                line-height: 1.2;
+                font-weight: 600;
+                color: #1f2937;
+                white-space: normal;
+                padding: 0 0.125rem;
+                word-break: break-word;
+            }
+
+            /* Video container padding */
+            #pipelineGifContainer {
+                margin-bottom: 0.5rem;
+            }
+
+            /* Pagination controls - Better spacing */
+            div[style*="display: flex"][style*="justify-content: center"] {
+                margin-top: 1rem !important;
             }
 
             /* Padding adjustments */
             section {
                 padding-top: 2rem !important;
                 padding-bottom: 2rem !important;
+            }
+
+            /* Container padding */
+            .max-w-5xl,
+            .max-w-6xl,
+            .max-w-7xl {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
             }
 
             /* Font size adjustments */
@@ -385,10 +514,80 @@
             .text-base,
             p {
                 font-size: 0.875rem !important;
+                line-height: 1.6 !important;
+                margin-bottom: 1rem !important;
             }
 
             .text-xs {
                 font-size: 0.65rem !important;
+            }
+
+            /* Images - Better mobile sizing */
+            figure img,
+            figure video {
+                border-radius: 0.5rem !important;
+            }
+
+            /* BibTeX section - Better mobile display */
+            #bibtex pre {
+                font-size: 0.7rem !important;
+                line-height: 1.4 !important;
+                padding: 1rem !important;
+                overflow-x: auto !important;
+            }
+
+            /* Better touch targets */
+            a, button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Icon adjustments */
+            .icon-box {
+                height: 2.5rem;
+                width: 2.5rem;
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Extra small devices (phones in portrait, less than 480px) */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.875rem !important;
+            }
+
+            h1 + p {
+                font-size: 0.95rem !important;
+            }
+
+            .hero-bg {
+                padding-top: 4.5rem !important;
+                padding-bottom: 2rem !important;
+            }
+
+            h3 {
+                font-size: 1.25rem !important;
+            }
+
+            .pipeline-label {
+                font-size: 0.5rem !important;
+            }
+
+            #image-grid-codec,
+            #image-grid-sampling {
+                transform: scale(0.45);
+                margin-bottom: -80px;
+            }
+
+            #pipelinePrevBtn,
+            #pipelineNextBtn {
+                width: 36px;
+                height: 36px;
+            }
+
+            #pipelineDots button {
+                width: 8px !important;
+                height: 8px !important;
             }
         }
 
@@ -405,6 +604,42 @@
                 -webkit-overflow-scrolling: touch;
             }
         }
+
+        /* Mobile-specific scaling for grid containers */
+        @media (max-width: 768px) {
+            /* Codec-Style: 2x2 grid layout on mobile */
+            #image-grid-codec {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem;
+                width: 100% !important;
+                height: auto !important;
+            }
+            
+            #image-grid-codec .codec-block-wrapper {
+                position: relative !important;
+                left: auto !important;
+                transform-origin: top left;
+                transform: scale(0.9);
+            }
+            
+            /* Traditional Sampling: scale only */
+            #image-grid-sampling {
+                transform-origin: top left;
+                transform: scale(0.45);
+            }
+        }
+
+        @media (max-width: 480px) {
+            #image-grid-codec .codec-block-wrapper {
+                transform: scale(0.75);
+            }
+            
+            #image-grid-sampling {
+                transform-origin: top left;
+                transform: scale(0.35);
+            }
+        }
     </style>
 </head>
 <body class="text-gray-800 bg-slate-50">
@@ -418,11 +653,25 @@
                 </div>
                 <!-- Desktop Navigation -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-center space-x-10">
+                    <div class="ml-10 flex items-center space-x-6">
                         <a href="#abstract" class="nav-link">Introduction</a>
                         <a href="#method" class="nav-link">Method</a>
                         <a href="#results" class="nav-link">Results</a>
                         <a href="#bibtex" class="nav-link">BibTeX</a>
+                        <div class="flex items-center gap-2 ml-4 pl-4 border-l border-gray-200">
+                            <span class="btn btn-primary text-xs py-1 px-2.5 opacity-60 cursor-not-allowed" title="Coming soon">
+                                <i class="fa-solid fa-file-pdf"></i> Paper
+                            </span>
+                            <a href="https://github.com/EvolvingLMMs-Lab/OneVision-Encoder" class="btn btn-accent text-xs py-1 px-2.5">
+                                <i class="fa-brands fa-github"></i> Code
+                            </a>
+                            <a href="https://github.com/EvolvingLMMs-Lab/LLaVA-ViT" class="btn btn-secondary text-xs py-1 px-2.5">
+                                <i class="fa-solid fa-layer-group"></i> Data
+                            </a>
+                            <a href="https://huggingface.co/lmms-lab-encoder/onevision-encoder-large" class="btn btn-secondary text-xs py-1 px-2.5">
+                                <i class="fa-solid fa-database"></i> Models
+                            </a>
+                        </div>
                         <a href="https://lmms-lab.com" class="btn btn-secondary text-sm py-1.5 px-3">
                             <i class="fa-solid fa-arrow-left text-xs"></i> LMMs-Lab
                         </a>
@@ -450,27 +699,11 @@
                 <span class="gradient-text">OneVision Encoder</span>
             </h1>
             <p class="text-xl sm:text-2xl text-gray-600 font-light mb-6">
-                An HEVC-Style Vision Transformer
+                The first HEVC style Vision Transformer with advanced multimodal capabilities
             </p>
 
             <div class="mt-8 text-base text-gray-500">
-                <p class="font-medium">LLaVA-OneVision Community Contributors</p>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="mt-12 flex justify-center gap-3 flex-wrap">
-                <span class="btn btn-primary opacity-60 cursor-not-allowed" title="Coming soon">
-                    <i class="fa-solid fa-file-pdf"></i> Paper (Coming) 
-                </span>
-                <a href="https://github.com/EvolvingLMMs-Lab/OneVision-Encoder" class="btn btn-accent">
-                    <i class="fa-brands fa-github"></i> Code
-                </a>
-                <a href="https://github.com/EvolvingLMMs-Lab/LLaVA-ViT" class="btn btn-secondary">
-                    <i class="fa-solid fa-layer-group"></i> Data (Coming) 
-                </a>
-                <a href="https://huggingface.co/lmms-lab-encoder/onevision-encoder-large" class="btn btn-secondary">
-                    <i class="fa-solid fa-database"></i> Models
-                </a>
+                <p class="font-medium">LMMs Lab, Glint Lab, AIM for Health Lab, MVP Lab</p>
             </div>
         </div>
     </div>
@@ -557,8 +790,18 @@
 
                 <!-- Interactive GIF Display with Case Switching -->
                 <div style="max-width: 1100px; margin: 0 auto;">
-                    <div id="pipelineGifContainer" style="position: relative; border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
-                        <video id="pipelineGifImage" src="images/case1.webm" autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 0.75rem; display: block; transition: opacity 0.3s ease;"></video>
+                    <!-- Outer frame containing both labels and video -->
+                    <div style="border-radius: 0.75rem; padding: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); background: #ffffff;">
+                        <!-- Labels Row - positioned above video container -->
+                        <div class="pipeline-labels" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; margin-bottom: 0.75rem; padding: 0 0.5rem; flex-wrap: nowrap;">
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Original Video</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Uniform Frame Sampling</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Temporal Saliency Detection</div>
+                            <div class="pipeline-label" style="flex: 1; text-align: center; font-size: 0.875rem; font-weight: 600; color: #1f2937; white-space: nowrap; padding: 0 0.25rem;">Codec-Style Patch Extraction</div>
+                        </div>
+                        <div id="pipelineGifContainer" style="position: relative; border-radius: 0.5rem; overflow: hidden;">
+                            <video id="pipelineGifImage" src="images/case1.webm" autoplay loop muted playsinline style="width: 100%; height: auto; border-radius: 0.5rem; display: block; transition: opacity 0.3s ease;"></video>
+                        </div>
                     </div>
 
                     <p id="pipelineDescription" class="text-center text-gray-500 text-xs mt-4 italic max-w-3xl mx-auto">
@@ -623,36 +866,38 @@
             <div class="mt-8">
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">LMM Probe Results</h3>
                 <p class="text-gray-600 mb-6 text-base">
-                    <span class="font-bold">Training on a mixed dataset of 740K samples from LLaVA-OneVision and 800K samples from LLaVA-Video SFT.</span> The training pipeline proceeds directly to Stage 2 fine-tuning. We adopt a streamlined native-resolution strategy inspired by LLaVA-OneVision: when the input frame resolution matches the model's native input size, it is fed directly—without tiling or cropping—to evaluate the ViT's native resolution capability.
-                </p>
+                    <span class="font-bold">Training on a mixed dataset of 740K samples from LLaVA-OneVision and 800K samples from LLaVA-Video SFT.</span> The training pipeline proceeds directly to Stage 2 fine-tuning. Following a streamlined native-resolution strategy inspired by LLaVA-OneVision, input frames whose resolution matches the model’s native input size are fed directly into the model without tiling or cropping, enabling an explicit evaluation of the ViT’s native-resolution representation capability. Furthermore, incorporating codec-style patch selection during training consistently improves visual–language performance across image, OCR, and video benchmarks. In codec-based experiments, the token budget is strictly controlled and set equal to the number of sampled frames, ensuring a fair comparison.                </p>
                 <div class="table-wrapper">
-                    <table class="results-table">
+                    <table class="results-table" style="float:left;">
                         <thead>
                             <tr class="header-group">
                                 <th rowspan="2" style="vertical-align: middle; min-width: 140px;">Task</th>
                                 <th rowspan="2" style="vertical-align: middle; min-width: 220px;">Benchmark</th>
-                                <th colspan="2" style="min-width: 140px;">Qwen3-4B-Instruct2507</th>
+                                <th colspan="3" style="min-width: 140px;">Qwen3-4B-Instruct2507</th>
                                 <th colspan="2" style="min-width: 140px;">Qwen2.5-1.5B</th>
                             </tr>
                             <tr class="sub-header">
-                                <th class="highlight-ours" style="min-width: 140px;">OV-Encoder</th>
-                                <th style="min-width: 140px;">SigLIP2</th>
-                                <th class="highlight-ours" style="min-width: 140px;">OV-Encoder</th>
-                                <th style="min-width: 140px;">SigLIP2</th>
+                                <th class="highlight-ours" style="min-width: 140px;">OV-Encoder<br>(Codec)</th>
+                                <th class="highlight-ours" style="min-width: 140px;">OV-Encoder<br>(Frame)</th>
+                                <th style="min-width: 140px;">SigLIP2<br>(Frame)</th>
+                                <th class="highlight-ours" style="min-width: 140px;">OV-Encoder<br>(Frame)</th>
+                                <th style="min-width: 140px;">SigLIP2<br>(Frame)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Video Tasks -->
                             <tr>
-                                <td rowspan="6" class="task-group-cell">Video</td>
+                                <td rowspan="7" class="task-group-cell">Video</td>
                                 <td class="row-header">MVBench</td>
-                                <td class="best-val highlight-ours">49.8</td>
+                                <td class="best-val highlight-ours">52.4</td>
+                                <td class="highlight-ours">49.8</td>
                                 <td>47.2</td>
-                                <td class="best-val highlight-ours">46.8</td>
+                                <td class="highlight-ours">46.8</td>
                                 <td>45.9</td>
                             </tr>
                             <tr>
                                 <td class="row-header">MLVU-dev</td>
+                                <td class="highlight-ours">46.3</td>
                                 <td class="best-val highlight-ours">49.4</td>
                                 <td>48.4</td>
                                 <td class="best-val highlight-ours">48.5</td>
@@ -660,43 +905,57 @@
                             </tr>
                             <tr>
                                 <td class="row-header">NExT-QA (MC)</td>
-                                <td class="best-val highlight-ours">71.9</td>
+                                <td class="best-val highlight-ours">75.6</td>
+                                <td class="highlight-ours">71.9</td>
                                 <td>70.6</td>
                                 <td class="best-val highlight-ours">67.6</td>
                                 <td>66.8</td>
                             </tr>
                             <tr>
                                 <td class="row-header">VideoMME</td>
-                                <td class="best-val highlight-ours">49.3</td>
+                                <td class="best-val highlight-ours">53.4</td>
+                                <td class="highlight-ours">49.3</td>
                                 <td>46.8</td>
                                 <td class="best-val highlight-ours">44.2</td>
                                 <td>42.7</td>
                             </tr>
                             <tr>
                                 <td class="row-header">Perception Test</td>
-                                <td class="best-val highlight-ours">56.7</td>
+                                <td class="best-val highlight-ours">60.3</td>
+                                <td class="highlight-ours">56.7</td>
                                 <td>56.0</td>
                                 <td class="best-val highlight-ours">55.2</td>
                                 <td>54.7</td>
                             </tr>
                             <tr>
                                 <td class="row-header">TOMATO</td>
+                                <td class="highlight-ours">22.2</td>
                                 <td class="highlight-ours">21.8</td>
                                 <td class="best-val">22.3</td>
                                 <td class="best-val highlight-ours">20.6</td>
                                 <td>20.2</td>
                             </tr>
+                            <tr>
+                                <td class="row-header">LongVideoBench-Val</td>
+                                <td class="best-val highlight-ours">50.4</td>
+                                <td class="highlight-ours">45.5</td>
+                                <td>45.2</td>
+                                <td class="highlight-ours">45.2</td>
+                                <td>45.3</td>
+                            </tr>
                             <!-- Image Tasks -->
                             <tr>
                                 <td rowspan="8" class="task-group-cell">Image</td>
                                 <td class="row-header">ChartQA</td>
-                                <td class="best-val highlight-ours">77.8</td>
+                                <td class="best-val highlight-ours">76.5</td>
+                                <td class="highlight-ours">77.8</td>
                                 <td>76.4</td>
                                 <td class="best-val highlight-ours">67.4</td>
                                 <td>67.2</td>
                             </tr>
                             <tr>
                                 <td class="row-header">DocVQA</td>
+                                <td class="highlight-ours">78.4</td>
                                 <td class="best-val highlight-ours">79.5</td>
                                 <td>75.0</td>
                                 <td class="best-val highlight-ours">73.2</td>
@@ -704,6 +963,7 @@
                             </tr>
                             <tr>
                                 <td class="row-header">InfoVQA</td>
+                                <td class="highlight-ours">43.1</td>
                                 <td class="best-val highlight-ours">45.5</td>
                                 <td>42.0</td>
                                 <td class="best-val highlight-ours">33.1</td>
@@ -711,13 +971,15 @@
                             </tr>
                             <tr>
                                 <td class="row-header">OCRBench</td>
-                                <td class="best-val highlight-ours">630.0</td>
-                                <td>621.0</td>
-                                <td class="highlight-ours">533.0</td>
-                                <td class="best-val">560.0</td>
+                                <td class="highlight-ours">605</td>
+                                <td class="best-val highlight-ours">630</td>
+                                <td>621</td>
+                                <td class="highlight-ours">533</td>
+                                <td class="best-val">560</td>
                             </tr>
                             <tr>
                                 <td class="row-header">OCRBench v2</td>
+                                <td class="best-val highlight-ours">26.3</td>
                                 <td class="highlight-ours">26.1</td>
                                 <td>26.1</td>
                                 <td class="best-val highlight-ours">20.5</td>
@@ -725,6 +987,7 @@
                             </tr>
                             <tr>
                                 <td class="row-header">MMBench-EN</td>
+                                <td class="highlight-ours">77.2</td>
                                 <td class="highlight-ours">78.5</td>
                                 <td class="best-val">79.6</td>
                                 <td class="highlight-ours">68.6</td>
@@ -732,6 +995,7 @@
                             </tr>
                             <tr>
                                 <td class="row-header">MMStar</td>
+                                <td class="highlight-ours">52.1</td>
                                 <td class="highlight-ours">54.3</td>
                                 <td class="best-val">55.0</td>
                                 <td class="highlight-ours">43.5</td>
@@ -739,6 +1003,7 @@
                             </tr>
                             <tr>
                                 <td class="row-header">RealWorldQA</td>
+                                <td class="highlight-ours">60.8</td>
                                 <td class="highlight-ours">61.2</td>
                                 <td class="best-val">62.1</td>
                                 <td class="highlight-ours">57.7</td>
@@ -748,148 +1013,19 @@
                     </table>
                 </div>
 
-                <p class="text-xs text-gray-500 mt-2 text-center">
-                    * OV-Encoder uses <a href="https://huggingface.co/lmms-lab/onevision-encoder-large" class="text-blue-600 hover:underline">onevision-encoder-large</a>. SigLIP2 uses <a href="https://huggingface.co/google/siglip2-so400m-patch16-naflex" class="text-blue-600 hover:underline">siglip2-so400m-patch16-naflex</a>.
+                <p class="text-xs text-gray-500 mt-2 text-left">
+                    * OV-Encoder (Codec) variants use OneVision encoder architecture. SigLIP2 uses <a href="https://huggingface.co/google/siglip2-so400m-patch16-naflex" class="text-blue-600 hover:underline">siglip2-so400m-patch16-naflex</a>. Bold values indicate the best performance within each model size category.
                 </p>
-            </div>
-
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">Attentive Probe Results</h3>
-                <p class="text-gray-600 mb-6 text-base">
-                    Performance comparison of different vision encoders using Attentive Probe evaluation. Models are evaluated using <strong>single clip</strong> input and trained for <strong>10 epochs</strong> across 8 action recognition datasets. Results show average performance and per-dataset scores for 8-frame and 16-frame configurations.
-                </p>
-
-                <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 max-w-5xl mx-auto">
-                <table class="results-table data-table">
-                    <colgroup>
-                        <col style="width:25%">
-                        <col style="width:10.71%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                        <col style="width:6.79%">
-                    </colgroup>
-                    <thead class="bg-header-gray">
-                        <tr>
-                            <th scope="col" class="sticky-col w-32 bg-header-gray">Method</th>
-                            <th scope="col" class="w-1/12">Arch.</th>
-                            <th scope="col" class="w-16">Res.</th>
-                            <th scope="col" class="w-16 text-blue-600 bg-blue-50">AVG</th>
-                            <th scope="col" class="w-1/12">SSV2</th>
-                            <th scope="col" class="w-1/12">Diving48</th>
-                            <th scope="col" class="w-1/12">Perce. Test</th>
-                            <th scope="col" class="w-1/12">CharEgo</th>
-                            <th scope="col" class="w-1/12">Epic Verb</th>
-                            <th scope="col" class="w-1/12">Epic Noun</th>
-                            <th scope="col" class="w-1/12">K400</th>
-                            <th scope="col" class="w-1/12">HMDB51</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-
-                        <!-- Group: 8 Frames -->
-                        <tr class="section-header">
-                            <td colspan="12">
-                                <i class="fa-solid fa-film mr-2 text-gray-400"></i> 8 Frames
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="sticky-col text-gray-900">MetaCLIP2</td>
-                            <td>ViT-L/14</td><td>224</td><td class="font-bold text-gray-800 bg-gray-50">46.3</td>
-                            <td>45.9</td><td>30.7</td><td>46.4</td><td>10.2</td><td>44.4</td><td>36.6</td><td>79.1</td><td>77.0</td>
-                        </tr>
-                        <tr>
-                            <td class="sticky-col text-gray-900">AIMv2</td>
-                            <td>ViT-L/14</td><td>224</td><td class="font-bold text-gray-800 bg-gray-50">52.6</td>
-                            <td>53.8</td><td>45.3</td><td>52.9</td><td>11.5</td><td>54.4</td><td>42.7</td><td>79.0</td><td>81.5</td>
-                        </tr>
-
-                        <tr>
-                            <td class="sticky-col text-gray-900">DINOv3</td>
-                            <td>ViT-L/14</td><td>224</td><td class="font-bold text-gray-800 bg-gray-50">56.0</td>
-                            <td>56.1</td><td>50.7</td><td>58.1</td><td>12.4</td><td>60.0</td><td>47.9</td><td>81.4</td><td>81.4</td>
-                        </tr>
-
-                        <tr>
-                            <td class="sticky-col text-gray-900">SigLIP2</td>
-                            <td>ViT-L/16</td><td>256</td><td class="font-bold text-gray-800 bg-gray-50">56.0</td>
-                            <td>57.9</td><td>53.2</td><td>56.3</td><td>12.8</td><td>58.8</td><td>45.2</td><td>81.3</td><td>82.1</td>
-                        </tr>
-
-                        <tr class="row-highlight border-t border-b border-blue-100">
-                            <td class="sticky-col">
-                                OV-Encoder <span class="text-[10px] font-normal opacity-80">(Ours)</span>
-                            </td>
-                            <td>ViT-L/14</td><td>224</td><td class="highlight-val">58.1</td>
-                            <td>57.0</td><td>56.0</td><td>57.7</td><td>12.4</td><td>61.9</td><td>53.3</td><td>84.1</td><td>82.2</td>
-                        </tr>
-                        <tr class="row-highlight border-t border-b border-blue-100">
-                            <td class="sticky-col">
-                                OV-Encoder-Codec <span class="text-[10px] font-normal opacity-80">(Ours)</span>
-                            </td>
-                            <td>ViT-L/14</td><td>224</td><td class="highlight-val">59.8</td>
-                            <td>57.5</td><td>65.9</td><td>59.6</td><td>12.1</td><td>61.8</td><td>53.7</td><td>84.3</td><td>83.2</td>
-                        </tr>
-
-                        <!-- Group: 16 Frames -->
-                        <tr class="section-header">
-                            <td colspan="12">
-                                <i class="fa-solid fa-film mr-2 text-gray-400"></i> 16 Frames
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="sticky-col text-gray-900">MetaCLIP2</td>
-                            <td>ViT-L/14</td><td>224</td><td class="font-bold text-gray-800 bg-gray-50">49.7</td>
-                            <td>51.6</td><td>47.1</td><td>47.3</td><td>10.4</td><td>49.0</td><td>35.7</td><td>80.1</td><td>76.1</td>
-                        </tr>
-                        <tr>
-                            <td class="sticky-col text-gray-900">AIMv2</td>
-                            <td>ViT-L/14</td><td>224</td><td class="font-bold text-gray-800 bg-gray-50">53.7</td>
-                            <td>54.8</td><td>50.0</td><td>55.0</td><td>12.2</td><td>55.0</td><td>42.1</td><td>79.3</td><td>80.9</td>
-                        </tr>
-                        <tr>
-                            <td class="sticky-col text-gray-900">DINOv3</td>
-                            <td>ViT-L/14</td><td>224</td><td class="font-bold text-gray-800 bg-gray-50">57.7</td>
-                            <td>57.8</td><td>61.1</td><td>57.5</td><td>12.2</td><td>61.3</td><td>48.8</td><td>82.6</td><td>79.8</td>
-                        </tr>
-                        <tr>
-                            <td class="sticky-col text-gray-900">SigLIP2</td>
-                            <td>ViT-L/16</td><td>256</td><td class="font-bold text-gray-800 bg-gray-50">57.3</td>
-                            <td>59.6</td><td>59.1</td><td>56.0</td><td>13.1</td><td>59.3</td><td>46.2</td><td>82.5</td><td>82.3</td>
-                        </tr>                        <tr class="row-highlight border-t border-b border-blue-100">
-                            <td class="sticky-col">
-                                OV-Encoder <span class="text-[10px] font-normal opacity-80">(Ours)</span>
-                            </td>
-                            <td>ViT-L/14</td><td>224</td><td class="highlight-val">59.9</td>
-                            <td>59.0</td><td>65.1</td><td>59.4</td><td>11.7</td><td>62.2</td><td>54.6</td><td>85.4</td><td>81.7</td>
-                        </tr>
-                        <tr class="row-highlight border-t border-b border-blue-100">
-                            <td class="sticky-col">
-                                OV-Encoder-Codec <span class="text-[10px] font-normal opacity-80">(Ours)</span>
-                            </td>
-                            <td>ViT-L/14</td><td>224</td><td class="highlight-val">60.9</td>
-                            <td>59.2</td><td>68.7</td><td>60.8</td><td>12.8</td><td>62.8</td><td>54.3</td><td>85.5</td><td>82.9</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-gray-500 mt-2 text-center max-w-5xl mx-auto">* Evaluation under Attentive Probe settings using single clip input, trained for 10 epochs.</p>
             </div>
 
             <!-- Video Compression Performance Section -->
             <div class="mt-8">
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">Video Compression Performance Comparison</h3>
-                <p class="text-gray-600 mb-6 text-base">
-                    Efficiency analysis comparing SigLIP2 (full-frame baseline) with OneVision Encoder-Codec (compressed input) on video understanding tasks. The codec compresses 64 source frames into varying output frames (1, 2, 4, 8, 16 frames), achieving superior performance with significant computational savings (75.0% to 98.4% reduction in patches processed) on Diving48 and Perception Test benchmarks.
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Patch-Efficient Video Understanding Comparison</h3>
+                <p class="text-gray-600 mb-3 text-base">
+                    Efficiency analysis comparing SigLIP2 with dense full-frame patch processing and OV-Encoder-Codec under a fixed token budget. It is important to emphasize that OV-Encoder-Codec does not perform temporal downsampling of the input video. All results are obtained from the same 64-frame (16384 patches) source video, where codec-native motion vectors and residuals are used to selectively extract a fixed number of spatiotemporal patches distributed across the entire temporal extent.
                 </p>
-
+                <p class="text-gray-600 mb-6 text-base">
+                    For a fair comparison, SigLIP2 is evaluated under the same token budgets and adopts a traditional frame sampling strategy, where each group of 256 patches corresponds to a contiguous RGB frame. Under a fixed token budget, OV-Encoder-Codec redistributes patches across time while preserving their spatial positions, enabling long-range temporal coverage. As a result, it outperforms SigLIP2 on Diving48 and Perception Test while reducing patch processing by 75.0%–98.4% compared to dense processing of 16,384 patches.                </p>
                 <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 max-w-5xl mx-auto">
                     <table class="min-w-full divide-y divide-gray-200 data-table">
                         <colgroup>
@@ -906,24 +1042,19 @@
                                 <th scope="col" class="sticky-col bg-header-gray text-left">Dataset</th>
                                 <th scope="col" class="bg-header-gray text-center">Model</th>
                                 <th scope="col" class="text-center bg-blue-50">
-                                    <div class="font-semibold">1 Frame</div>
-                                    <div class="text-xs text-gray-500 font-normal">256 Patches</div>
+                                    <div class="font-semibold">256 Patches</div>
                                 </th>
                                 <th scope="col" class="text-center bg-blue-50">
-                                    <div class="font-semibold">2 Frames</div>
-                                    <div class="text-xs text-gray-500 font-normal">512 Patches</div>
+                                    <div class="font-semibold">512 Patches</div>
                                 </th>
                                 <th scope="col" class="text-center bg-blue-50">
-                                    <div class="font-semibold">4 Frames</div>
-                                    <div class="text-xs text-gray-500 font-normal">1024 Patches</div>
+                                    <div class="font-semibold">1024 Patches</div>
                                 </th>
                                 <th scope="col" class="text-center bg-blue-50">
-                                    <div class="font-semibold">8 Frames</div>
-                                    <div class="text-xs text-gray-500 font-normal">2048 Patches</div>
+                                    <div class="font-semibold">2048 Patches</div>
                                 </th>
                                 <th scope="col" class="text-center bg-blue-50">
-                                    <div class="font-semibold">16 Frames</div>
-                                    <div class="text-xs text-gray-500 font-normal">4096 Patches</div>
+                                    <div class="font-semibold">4096 Patches</div>
                                 </th>
                             </tr>
                         </thead>
@@ -935,8 +1066,8 @@
                                 </td>
                                 <td class="text-gray-700">
                                     <div class="font-medium">SigLIP2</div>
-                                    <div class="text-xs text-gray-500">(ViT-L/16, 256)</div>
-                                    <div class="text-xs text-gray-600 mt-1"><i class="fa-solid fa-check-circle mr-1"></i>Full-frame input (no compression)</div>
+                                    <div class="text-xs text-gray-500">(ViT-L/16, 256px)</div>
+                                    <div class="text-xs text-gray-600 mt-1"><i class="fa-solid fa-check-circle mr-1"></i>Traditional Frame Sampling (dense patch processing)</div>
                                 </td>
                                 <td class="text-center">19.9</td>
                                 <td class="text-center">28.1</td>
@@ -947,12 +1078,12 @@
                             <tr class="row-highlight">
                                 <td class="text-gray-900">
                                     <div class="font-medium">OneVision Encoder-Codec</div>
-                                    <div class="text-xs text-gray-500">(ViT-L/14, 224)</div>
-                                    <div class="text-xs text-green-600 mt-1 font-medium"><i class="fa-solid fa-compress mr-1"></i>64-frame -> N-frame compression</div>
+                                    <div class="text-xs text-gray-500">(ViT-L/14, 224px)</div>
+                                    <div class="text-xs text-green-600 mt-1 font-medium"><i class="fa-solid fa-compress mr-1"></i>16384 patches -> N patches</div>
                                 </td>
                                 <td class="text-center">
                                     <div class="highlight-val font-semibold">36.0</div>
-                                    <div class="text-xs text-gray-500 mt-0.5">98.4% ↓</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">98.4% ↓ *</div>
                                 </td>
                                 <td class="text-center">
                                     <div class="highlight-val font-semibold">45.5</div>
@@ -979,8 +1110,8 @@
                                 </td>
                                 <td class="text-gray-700">
                                     <div class="font-medium">SigLIP2</div>
-                                    <div class="text-xs text-gray-500">(ViT-L/16, 256)</div>
-                                    <div class="text-xs text-gray-600 mt-1"><i class="fa-solid fa-check-circle mr-1"></i>Full-frame input (no compression)</div>
+                                    <div class="text-xs text-gray-500">(ViT-L/16, 256px)</div>
+                                    <div class="text-xs text-gray-600 mt-1"><i class="fa-solid fa-check-circle mr-1"></i>Traditional Frame Sampling (dense patch processing)</div>
                                 </td>
                                 <td class="text-center text-gray-400">-</td>
                                 <td class="text-center">48.7</td>
@@ -991,12 +1122,12 @@
                             <tr class="row-highlight">
                                 <td class="text-gray-900">
                                     <div class="font-medium">OneVision Encoder-Codec</div>
-                                    <div class="text-xs text-gray-500">(ViT-L/14, 224)</div>
-                                    <div class="text-xs text-green-600 mt-1 font-medium"><i class="fa-solid fa-compress mr-1"></i>64-frame -> N-frame compression</div>
+                                    <div class="text-xs text-gray-500">(ViT-L/14, 224px)</div>
+                                    <div class="text-xs text-green-600 mt-1 font-medium"><i class="fa-solid fa-compress mr-1"></i>16384 patches -> N patches</div>
                                 </td>
                                 <td class="text-center">
                                     <div class="highlight-val font-semibold">41.2</div>
-                                    <div class="text-xs text-gray-500 mt-0.5">98.4% ↓</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">98.4% ↓ </div>
                                 </td>
                                 <td class="text-center">
                                     <div class="highlight-val font-semibold">49.5</div>
@@ -1018,7 +1149,17 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-gray-500 mt-2 text-center max-w-5xl mx-auto">* Percentages under OneVision Encoder-Codec indicate patch reduction vs processing all 64 frames (no compression). '-' indicates data not available.</p>
+                <p class="text-xs text-gray-500 mt-2 text-left max-w-5xl">
+                  * Percentages under OV-Encoder-Codec indicate patch reduction relative to dense processing of all 16384 patches.
+                </p>
+
+                <p class="text-xs text-gray-500 mt-2 text-left max-w-5xl">
+                  '<span class="text-xs text-green-600 font-medium">
+                    <i class="fa-solid fa-compress mr-1"></i>
+                    16384 patches -> N patches
+                  </span>'
+                  indicates Codec-Style Patch Selection, where motion-relevant patches are selectively retained instead of temporal frame sampling.
+                </p>
             </div>
 
 
@@ -1029,10 +1170,10 @@
     <section id="bibtex" class="py-16 bg-slate-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h3 class="text-2xl font-bold text-gray-900 mb-4">BibTeX</h3>
-            <div class="bg-slate-50 p-6 max-w-2xl mx-auto">
+            <div class="bg-slate-50 p-6 max-w-2xl">
                 <pre class="text-sm text-gray-700 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed">@article{onevision_encoder_2026,
-  title={OneVision Encoder: An HEVC-Style Vision Transformer},
-  author={LLaVA-OneVision Community Contributors},
+  title={OneVision Encoder},
+  author={LMMs Lab, Glint Lab, AIM for Health Lab, MVP Lab},
   journal={arXiv preprint},
   year={2026}
 }</pre>
@@ -1145,6 +1286,14 @@
                     patchesByT[p.t].push(p);
                 });
 
+                // Create wrapper for reference block (Block 0)
+                const refBlockWrapper = document.createElement('div');
+                refBlockWrapper.className = 'codec-block-wrapper';
+                refBlockWrapper.style.position = 'absolute';
+                refBlockWrapper.style.left = '0px';
+                refBlockWrapper.style.width = blockWidth + 'px';
+                refBlockWrapper.style.height = (totalHeight + 40) + 'px';
+
                 // Block 0: Static reference frame (t=0, displayed as t=1)
                 const refPatches = patchesByT[0] || [];
                 for (let h = 0; h < GRID_SIZE; h++) {
@@ -1195,7 +1344,7 @@
                             imgContainer.style.backgroundColor = '#1a1a1a';
                         }
 
-                        gridContainer.appendChild(imgContainer);
+                        refBlockWrapper.appendChild(imgContainer);
                     }
                 }
 
@@ -1208,14 +1357,24 @@
                 refLabel.style.fontWeight = '600';
                 refLabel.style.color = '#1f2937';
                 refLabel.textContent = 't = 1';
-                gridContainer.appendChild(refLabel);
+                refBlockWrapper.appendChild(refLabel);
+                gridContainer.appendChild(refBlockWrapper);
 
-                // Animated blocks (2 blocks showing t=2,3 then t=4,5 etc)
+                // Animated blocks (3 blocks showing t=2,3,4, etc.)
                 const animBlocks = [];
                 const animLabels = [];
 
                 for (let blockIdx = 0; blockIdx < NUM_ANIM_BLOCKS; blockIdx++) {
                     const blockX = (1 + blockIdx) * (blockWidth + blockGap);
+                    
+                    // Create wrapper for this animated block
+                    const blockWrapper = document.createElement('div');
+                    blockWrapper.className = 'codec-block-wrapper';
+                    blockWrapper.style.position = 'absolute';
+                    blockWrapper.style.left = blockX + 'px';
+                    blockWrapper.style.width = blockWidth + 'px';
+                    blockWrapper.style.height = (totalHeight + 40) + 'px';
+                    
                     const gridCells = {};
 
                     for (let h = 0; h < GRID_SIZE; h++) {
@@ -1224,7 +1383,7 @@
                             imgContainer.style.position = 'absolute';
                             imgContainer.style.width = IMAGE_SIZE + 'px';
                             imgContainer.style.height = IMAGE_SIZE + 'px';
-                            imgContainer.style.left = (blockX + w * cellSize) + 'px';
+                            imgContainer.style.left = (w * cellSize) + 'px';
                             imgContainer.style.top = (h * cellSize) + 'px';
                             imgContainer.style.overflow = 'hidden';
                             imgContainer.style.border = '1px solid #e5e7eb';
@@ -1239,7 +1398,7 @@
                             img.style.objectFit = 'cover';
 
                             imgContainer.appendChild(img);
-                            gridContainer.appendChild(imgContainer);
+                            blockWrapper.appendChild(imgContainer);
                             gridCells[`${h}_${w}`] = { container: imgContainer, img: img };
 
                             imgContainer.addEventListener('mouseenter', function(e) {
@@ -1270,13 +1429,15 @@
 
                     const label = document.createElement('div');
                     label.style.position = 'absolute';
-                    label.style.left = (blockX + blockWidth / 2 - 20) + 'px';
+                    label.style.left = (blockWidth / 2 - 20) + 'px';
                     label.style.top = (totalHeight + 10) + 'px';
                     label.style.fontSize = '14px';
                     label.style.fontWeight = '600';
                     label.style.color = '#1f2937';
-                    gridContainer.appendChild(label);
+                    blockWrapper.appendChild(label);
                     animLabels.push(label);
+                    
+                    gridContainer.appendChild(blockWrapper);
                 }
 
                 let baseT = 1; // start from t=1 (displayed as t=2)
