@@ -1453,12 +1453,25 @@
                 const blockWidth = GRID_SIZE * cellSize - GAP;
                 const blockGap = 20;
                 const totalBlocks = 1 + NUM_ANIM_BLOCKS;
-                const totalWidth = totalBlocks * blockWidth + (totalBlocks - 1) * blockGap;
                 const totalHeight = GRID_SIZE * cellSize - GAP;
+                
+                // Detect layout mode based on container width
+                const containerWidth = gridContainer.offsetWidth || window.innerWidth;
+                const isMobileLayout = containerWidth <= 768;
+                
+                // Calculate appropriate grid dimensions
+                let totalWidth;
+                if (isMobileLayout) {
+                    // Mobile: 2x2 grid, so width should accommodate 2 blocks side by side
+                    totalWidth = 2 * blockWidth + blockGap;
+                } else {
+                    // Desktop: 4x1 horizontal layout
+                    totalWidth = totalBlocks * blockWidth + (totalBlocks - 1) * blockGap;
+                }
 
                 gridContainer.style.position = 'relative';
-                gridContainer.style.width = totalWidth + 'px';
-                gridContainer.style.height = (totalHeight + 40) + 'px';
+                gridContainer.style.width = isMobileLayout ? 'auto' : (totalWidth + 'px');
+                gridContainer.style.height = isMobileLayout ? 'auto' : ((totalHeight + 40) + 'px');
                 gridContainer.style.overflow = 'visible';
 
                 // group patches by t value: { t: [{h, w, filename}, ...] }
@@ -1471,8 +1484,13 @@
                 // Create wrapper for reference block (Block 0)
                 const refBlockWrapper = document.createElement('div');
                 refBlockWrapper.className = 'codec-block-wrapper';
-                refBlockWrapper.style.position = 'absolute';
-                refBlockWrapper.style.left = '0px';
+                
+                if (!isMobileLayout) {
+                    // Desktop: use absolute positioning
+                    refBlockWrapper.style.position = 'absolute';
+                    refBlockWrapper.style.left = '0px';
+                }
+                
                 refBlockWrapper.style.width = blockWidth + 'px';
                 refBlockWrapper.style.height = (totalHeight + 40) + 'px';
 
@@ -1552,8 +1570,13 @@
                     // Create wrapper for this animated block
                     const blockWrapper = document.createElement('div');
                     blockWrapper.className = 'codec-block-wrapper';
-                    blockWrapper.style.position = 'absolute';
-                    blockWrapper.style.left = blockX + 'px';
+                    
+                    if (!isMobileLayout) {
+                        // Desktop: use absolute positioning
+                        blockWrapper.style.position = 'absolute';
+                        blockWrapper.style.left = blockX + 'px';
+                    }
+                    
                     blockWrapper.style.width = blockWidth + 'px';
                     blockWrapper.style.height = (totalHeight + 40) + 'px';
                     
