@@ -1680,18 +1680,6 @@
                     animLabels.push(blockLabel);
                     gridContainer.appendChild(blockWrapper);
                     animBlocks.push(gridCells);
-
-                    const label = document.createElement('div');
-                    label.style.position = 'absolute';
-                    label.style.left = (blockWidth / 2 - 20) + 'px';
-                    label.style.top = (totalHeight + 10) + 'px';
-                    label.style.fontSize = '14px';
-                    label.style.fontWeight = '600';
-                    label.style.color = '#1f2937';
-                    blockWrapper.appendChild(label);
-                    animLabels.push(label);
-                    
-                    gridContainer.appendChild(blockWrapper);
                 }
 
                 let baseT = 1; // start from t=1 (displayed as t=2)
