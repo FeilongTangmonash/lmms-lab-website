@@ -645,7 +645,7 @@
                 justify-content: center !important;
             }
 
-            /* Improve table mobile experience */
+            /* Improve table mobile experience - override ::after with ::before */
             .overflow-x-auto {
                 border-radius: 0.5rem;
                 box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
@@ -653,7 +653,7 @@
                 background: white;
             }
 
-            /* Add scrollable table hint */
+            /* Add scrollable table hint at top (overrides default ::after) */
             .overflow-x-auto::before {
                 content: '→ Swipe to view full table →';
                 display: block;
@@ -667,7 +667,12 @@
                 letter-spacing: 0.05em;
             }
 
-            /* Better table cell sizing on mobile */
+            /* Hide the bottom scroll hint on mobile (since we have top hint) */
+            .overflow-x-auto::after {
+                display: none;
+            }
+
+            /* Better table cell sizing on mobile - consolidated sticky-col rules */
             .data-table th,
             .data-table td {
                 font-size: 0.7rem !important;
@@ -679,10 +684,6 @@
                 font-size: 0.7rem !important;
                 min-width: 120px !important;
                 max-width: 120px !important;
-            }
-
-            /* Enhance sticky column visibility */
-            .data-table .sticky-col {
                 box-shadow: 3px 0 8px rgba(0, 0, 0, 0.15) !important;
                 background-color: #ffffff !important;
             }
