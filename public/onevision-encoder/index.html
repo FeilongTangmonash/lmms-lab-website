@@ -432,18 +432,17 @@
                 padding: 1.5rem 1rem;
             }
 
-            /* Image grid - Better mobile scaling */
-            #image-grid-codec,
-            #image-grid-sampling {
-                transform: scale(0.55);
-                transform-origin: top left;
-                margin-bottom: -60px;
-            }
-
             /* Image grid containers - Better mobile display */
             .bg-slate-50.rounded-xl {
                 padding: 1rem !important;
                 margin-bottom: 1.5rem !important;
+                overflow: visible !important;
+            }
+
+            /* Better spacing for section titles on mobile */
+            h4 {
+                font-size: 1rem !important;
+                margin-bottom: 0.75rem !important;
             }
 
             /* Pipeline section - Enhanced mobile layout */
@@ -607,37 +606,135 @@
 
         /* Mobile-specific scaling for grid containers */
         @media (max-width: 768px) {
-            /* Codec-Style: 2x2 grid layout on mobile */
+            /* Codec-Style: 2x2 responsive grid layout on mobile */
             #image-grid-codec {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 1.5rem;
+                gap: 1rem !important;
                 width: 100% !important;
                 height: auto !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
             }
             
             #image-grid-codec .codec-block-wrapper {
                 position: relative !important;
                 left: auto !important;
-                transform-origin: top left;
-                transform: scale(0.9);
+                width: 100% !important;
+                height: auto !important;
+                transform: none !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Scale grid cells to fit mobile width */
+            #image-grid-codec .codec-block-wrapper > div[style*="position: absolute"] {
+                transform: scale(0.45) !important;
+                transform-origin: top center !important;
             }
             
-            /* Traditional Sampling: scale only */
+            /* Traditional Sampling: better mobile scaling */
             #image-grid-sampling {
-                transform-origin: top left;
-                transform: scale(0.45);
+                transform-origin: top center !important;
+                transform: scale(0.48) !important;
+                width: 100% !important;
+                margin: 0 auto !important;
+                display: flex !important;
+                justify-content: center !important;
+            }
+
+            /* Improve table mobile experience */
+            .overflow-x-auto {
+                border-radius: 0.5rem;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+                margin-bottom: 1rem;
+                background: white;
+            }
+
+            /* Add scrollable table hint */
+            .overflow-x-auto::before {
+                content: '→ Swipe to view full table →';
+                display: block;
+                text-align: center;
+                padding: 0.5rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border-radius: 0.5rem 0.5rem 0 0;
+                letter-spacing: 0.05em;
+            }
+
+            /* Better table cell sizing on mobile */
+            .data-table th,
+            .data-table td {
+                font-size: 0.7rem !important;
+                padding: 6px 8px !important;
+                white-space: nowrap;
+            }
+
+            .data-table .sticky-col {
+                font-size: 0.7rem !important;
+                min-width: 120px !important;
+                max-width: 120px !important;
+            }
+
+            /* Enhance sticky column visibility */
+            .data-table .sticky-col {
+                box-shadow: 3px 0 8px rgba(0, 0, 0, 0.15) !important;
+                background-color: #ffffff !important;
             }
         }
 
         @media (max-width: 480px) {
-            #image-grid-codec .codec-block-wrapper {
-                transform: scale(0.75);
+            /* More compact 2x2 grid for very small screens */
+            #image-grid-codec {
+                gap: 0.75rem !important;
+            }
+
+            #image-grid-codec .codec-block-wrapper > div[style*="position: absolute"] {
+                transform: scale(0.35) !important;
             }
             
             #image-grid-sampling {
-                transform-origin: top left;
-                transform: scale(0.35);
+                transform: scale(0.38) !important;
+            }
+
+            /* Even smaller table text for tiny screens */
+            .data-table th,
+            .data-table td {
+                font-size: 0.65rem !important;
+                padding: 4px 6px !important;
+            }
+
+            .data-table .sticky-col {
+                min-width: 100px !important;
+                max-width: 100px !important;
+            }
+        }
+
+        /* Tablet optimization */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            #image-grid-codec {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.5rem !important;
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            #image-grid-codec .codec-block-wrapper {
+                position: relative !important;
+                left: auto !important;
+                width: 100% !important;
+                transform: none !important;
+            }
+
+            #image-grid-codec .codec-block-wrapper > div[style*="position: absolute"] {
+                transform: scale(0.7) !important;
+                transform-origin: top center !important;
             }
         }
     </style>
@@ -752,27 +849,27 @@
                 </p>
 
                 <!-- Codec Style Input Grid -->
-                <div class="bg-slate-50 rounded-xl p-6 mb-6">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-2 text-center">
+                <div class="bg-slate-50 rounded-xl p-4 sm:p-6 mb-6">
+                    <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-2 text-center">
                         Codec-Style Input
                     </h4>
-                    <p class="text-gray-500 text-xs text-left mb-4">
+                    <p class="text-gray-500 text-xs sm:text-xs text-left mb-4">
                         Left: Reference frame (t=1) with all patches. Right: Three animated blocks showing consecutive frames (t=2,3,4 → t=5,6,7 → ...), cycling through t=2 to t=64. Each frame shows only salient patches at their spatial positions. The result: <strong>75-98% fewer patches</strong> while retaining the information that matters.
                     </p>
-                    <div id="image-grid-codec" style="display: block; margin: 0 auto; padding-top: 20px;">
+                    <div id="image-grid-codec" style="display: block; margin: 0 auto; padding-top: 20px; overflow: visible;">
                         <!-- Grid will be generated by JavaScript -->
                     </div>
                 </div>
 
                 <!-- Sampling Frame Input Grid -->
-                <div class="bg-slate-50 rounded-xl p-6">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-2 text-center">
+                <div class="bg-slate-50 rounded-xl p-4 sm:p-6">
+                    <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-2 text-center">
                         Traditional Frame Sampling
                     </h4>
-                    <p class="text-gray-500 text-xs text-left mb-4">
+                    <p class="text-gray-500 text-xs sm:text-xs text-left mb-4">
                         Uniformly samples 4 frames and processes all patches from each. Notice the redundancy: static backgrounds, repeated textures, and unchanging regions are processed multiple times across frames—wasting computation on pixels that add no new information.
                     </p>
-                    <div id="image-grid-sampling" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
+                    <div id="image-grid-sampling" style="display: flex; flex-direction: column; align-items: center; gap: 2px; overflow: visible;">
                         <!-- Grid will be generated by JavaScript -->
                     </div>
                 </div>
@@ -1026,7 +1123,7 @@
                 </p>
                 <p class="text-gray-600 mb-6 text-base">
                     For a fair comparison, SigLIP2 is evaluated under the same token budgets and adopts a traditional frame sampling strategy, where each group of 256 patches corresponds to a contiguous RGB frame. Under a fixed token budget, OV-Encoder-Codec redistributes patches across time while preserving their spatial positions, enabling long-range temporal coverage. As a result, it outperforms SigLIP2 on Diving48 and Perception Test while reducing patch processing by 75.0%–98.4% compared to dense processing of 16,384 patches.                </p>
-                <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 max-w-5xl mx-auto">
+                <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 max-w-full mx-auto" style="background: white;">
                     <table class="min-w-full divide-y divide-gray-200 data-table">
                         <colgroup>
                             <col style="width:22%">
@@ -1149,11 +1246,11 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-gray-500 mt-2 text-left max-w-5xl">
+                <p class="text-xs text-gray-500 mt-2 text-left max-w-full">
                   * Percentages under OV-Encoder-Codec indicate patch reduction relative to dense processing of all 16384 patches.
                 </p>
 
-                <p class="text-xs text-gray-500 mt-2 text-left max-w-5xl">
+                <p class="text-xs text-gray-500 mt-2 text-left max-w-full">
                   '<span class="text-xs text-green-600 font-medium">
                     <i class="fa-solid fa-compress mr-1"></i>
                     16384 patches -> N patches
